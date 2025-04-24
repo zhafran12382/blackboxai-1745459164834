@@ -1,0 +1,121 @@
+<div class="h-screen flex flex-col bg-gray-100">
+    <!-- Chat Header -->
+    <div class="bg-green-600 text-white px-4 py-3 flex justify-between items-center shadow-md">
+        <div class="flex items-center">
+            <h1 class="text-xl font-semibold">Grup Chat Umum</h1>
+            <span class="ml-2 text-sm bg-green-500 px-2 py-1 rounded-full" id="onlineCount">
+                <i class="fas fa-users mr-1"></i>
+                <span id="userCount">1</span> Online
+            </span>
+        </div>
+        <div class="flex items-center space-x-2">
+            <span id="userDisplay" class="text-sm"></span>
+            <button id="logoutBtn" class="text-white hover:bg-green-700 px-3 py-1 rounded-md transition-colors">
+                <i class="fas fa-sign-out-alt mr-1"></i>
+                Keluar
+            </button>
+        </div>
+    </div>
+
+    <!-- Chat Messages Container -->
+    <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+        <!-- Messages will be inserted here by JavaScript -->
+    </div>
+
+    <!-- Message Input -->
+    <div class="bg-white border-t border-gray-200 px-4 py-3">
+        <!-- Preview Container -->
+        <div id="previewContainer" class="hidden mb-3">
+            <!-- File Previews -->
+            <div id="filePreview" class="hidden relative">
+                <!-- Image Preview -->
+                <div id="imagePreview" class="hidden">
+                    <img id="previewImg" class="max-h-32 rounded-lg" alt="Preview">
+                </div>
+                <!-- Video Preview -->
+                <div id="videoPreview" class="hidden">
+                    <video id="previewVideo" class="max-h-32 rounded-lg" controls></video>
+                </div>
+                <!-- Audio Preview -->
+                <div id="audioPreview" class="hidden">
+                    <audio id="previewAudio" class="w-full" controls></audio>
+                </div>
+                <button onclick="Chat.clearPreview()" class="absolute top-1 right-1 bg-gray-800/50 text-white rounded-full p-1">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!-- Voice Recording Preview -->
+            <div id="voicePreview" class="hidden">
+                <div class="flex items-center gap-2 text-sm text-gray-600">
+                    <i class="fas fa-microphone text-red-500"></i>
+                    <span id="recordingTime">00:00</span>
+                    <button onclick="Chat.stopRecording()" class="bg-red-500 text-white px-3 py-1 rounded-full">
+                        Stop
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <form id="messageForm" class="flex items-center space-x-2">
+            <!-- Attachment Button -->
+            <button 
+                type="button"
+                id="attachButton"
+                class="p-2 text-gray-500 hover:text-green-600 transition-colors"
+                onclick="document.getElementById('fileInput').click()"
+            >
+                <i class="fas fa-paperclip"></i>
+            </button>
+            <input 
+                type="file" 
+                id="fileInput" 
+                class="hidden" 
+                accept="image/*,video/*,audio/*"
+                onchange="Chat.handleFileSelect(event)"
+            >
+
+            <!-- Voice Record Button -->
+            <button 
+                type="button"
+                id="voiceButton"
+                class="p-2 text-gray-500 hover:text-green-600 transition-colors"
+            >
+                <i class="fas fa-microphone"></i>
+            </button>
+
+            <!-- Text Input -->
+            <input 
+                type="text" 
+                id="messageInput" 
+                name="message" 
+                class="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                placeholder="Ketik pesan..."
+            >
+
+            <!-- Send Button -->
+            <button 
+                type="submit" 
+                class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+            >
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Message Templates -->
+<template id="welcomeMessage">
+    <div class="flex justify-center">
+        <div class="bg-green-100 text-green-700 px-4 py-2 rounded-lg text-sm">
+            Selamat datang di Grup Chat Umum! 👋
+        </div>
+    </div>
+</template>
+
+<template id="systemMessage">
+    <div class="flex justify-center">
+        <div class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg text-sm">
+            <!-- System message content will be inserted here -->
+        </div>
+    </div>
+</template>
